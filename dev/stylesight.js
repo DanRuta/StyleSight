@@ -367,7 +367,7 @@ window.addEventListener("load", async () => {
                             },
                             radius: {
                                 type: "f",
-                                value: 0.4
+                                value: parseFloat(radiusSlider.value)
                             },
                             opacity: {
                                 type: "f",
@@ -448,4 +448,16 @@ window.addEventListener("load", async () => {
     opacitySlider.addEventListener("change", updateOpacity)
     opacitySlider.addEventListener("mousemove", updateOpacity)
 
+    resolutionSlider.addEventListener("change", () => {
+        if (Net.activeStyle.id=="none") {
+            makeBoxObject()
+        } else {
+            makeBoxObject(parseInt(resolutionSlider.value))
+        }
+
+        if (Net.activeStyle.styleBox) {
+            Net.activeStyle.styleBox.visible = false
+        }
+        Net.activeStyle.hasTexture = false
+    })
 })

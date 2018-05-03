@@ -101,6 +101,13 @@
                 font-size: 20pt;
                 padding-top: 20px;
             }
+            .effectSlider > div:first-child {
+                width: 40%;
+                text-align: center;
+            }
+            .effectSlider > *:last-child {
+                width: 60%;
+            }
 
             #stylesContainer {
                 display: flex;
@@ -167,6 +174,11 @@
                 <div class="effectSlider">
                     <div>Opacity</div>
                     <input id="opacitySlider" value=1 type="range" min=0 max=1 step=0.01>
+                </div>
+
+                <div class="effectSlider">
+                    <div>Resolution (dangerous)</div>
+                    <input id="resolutionSlider" value=100 type="range" min=10 max=250>
                 </div>
 
             </div>
