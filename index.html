@@ -94,9 +94,18 @@
                 transition: transform 300ms ease;
             }
 
+            .effectSlider {
+                display: flex;
+                width: 100%;
+                justify-content: space-around;
+                font-size: 20pt;
+                padding-top: 20px;
+            }
+
             #stylesContainer {
                 display: flex;
                 height: 30vh;
+                overflow-x: scroll;
             }
 
             #stylesContainer > div {
@@ -150,6 +159,10 @@
 
                 <div id="stylesContainer"></div>
 
+                <div class="effectSlider">
+                    <div>Radius</div>
+                    <input id="radiusSlider" type="range" min=0 max=1 step=0.01>
+                </div>
             </div>
 
             <button class="toggle">

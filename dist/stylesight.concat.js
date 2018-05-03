@@ -433,6 +433,16 @@ window.addEventListener("load", async () => {
         makeBoxObject()
     })
 
+    // UI
+    const updateRadius = () => {
+        styleMaterial && (styleMaterial.uniforms.radius.value = parseFloat(radiusSlider.value))
+        console.log("set radius to", parseFloat(radiusSlider.value))
+    }
+
+
+    radiusSlider.addEventListener("change", updateRadius)
+    radiusSlider.addEventListener("mousemove", updateRadius)
+
 })
 
 "use strict"
@@ -584,20 +594,15 @@ class Net {
 
                 vec4 pixel = texture2D(texture, vUv);
 
-                // if (sqrt( (0.5 - vUv[0])*(0.5 - vUv[0]) + (0.5 - vUv[1])*(0.5 - vUv[1]) ) < radius) {
+                if (sqrt( (0.5 - vUv[0])*(0.5 - vUv[0]) + (0.5 - vUv[1])*(0.5 - vUv[1]) ) < radius) {
 
-                //     // ${this[name+"Body"]}
-                //     vec4 newColour = vec4(pixel.rgb, 1.0);
+                    gl_FragColor = pixel;
 
-                //     gl_FragColor = newColour*(1.0-intensity) + pixel*intensity;
+                    // gl_FragColor = newColour*(1.0-intensity) + pixel*intensity;
 
-                // } else {
-                //     gl_FragColor = vec4(pixel.rgb, 1.0);
-                // }
-
-                gl_FragColor.a = 1.0;
-                gl_FragColor.rgb = pixel.rgb;
-                gl_FragColor = pixel;
+                } else {
+                    gl_FragColor.a = 0.0;
+                }
             }
         `
     }

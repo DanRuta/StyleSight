@@ -433,4 +433,13 @@ window.addEventListener("load", async () => {
         makeBoxObject()
     })
 
+    // UI
+    const updateRadius = () => {
+        styleMaterial && (styleMaterial.uniforms.radius.value = parseFloat(radiusSlider.value))
+        console.log("set radius to", parseFloat(radiusSlider.value))
+    }
+
+    radiusSlider.addEventListener("change", updateRadius)
+    radiusSlider.addEventListener("mousemove", updateRadius)
+
 })
