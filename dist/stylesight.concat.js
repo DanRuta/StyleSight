@@ -430,7 +430,11 @@ window.addEventListener("load", async () => {
         camera.updateProjectionMatrix()
         scene.remove(box)
         video.pause()
-        makeBoxObject()
+        makeBoxObject(Net.activeStyle.id=="none" ? null : parseInt(resolutionSlider.value))
+        if (Net.activeStyle.styleBox) {
+            Net.activeStyle.styleBox.visible = false
+        }
+        Net.activeStyle.hasTexture = false
     })
 
     // UI
@@ -449,11 +453,8 @@ window.addEventListener("load", async () => {
     opacitySlider.addEventListener("mousemove", updateOpacity)
 
     resolutionSlider.addEventListener("change", () => {
-        if (Net.activeStyle.id=="none") {
-            makeBoxObject()
-        } else {
-            makeBoxObject(parseInt(resolutionSlider.value))
-        }
+
+        makeBoxObject(Net.activeStyle.id=="none" ? null : parseInt(resolutionSlider.value))
 
         if (Net.activeStyle.styleBox) {
             Net.activeStyle.styleBox.visible = false
