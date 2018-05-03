@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head manifest="manifest.json">
+        <title>Stylesight</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <link rel="canonical" href="https://ai.danruta.co.uk/stylesight">
+        <meta name="description" content="StyleSight - Browser based real time style transfer applied to VR video">
+        <meta name="theme-color" content="#000000">
+        <link rel="manifest" href="./manifest.json">
+        <meta http-equiv="MSThemeCompatible">
+        <script src="dist/dependencies.min.js"></script>
+        <script id="vertexShaderSource" type="vertex">
+            varying vec2 vUv;
+
+            void main() {
+               vUv = uv;
+               gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+            }
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.10.0"></script>
+        <script src="dist/stylesight.min.js"></script>
+        <style>
+            body {
+                margin: 0;
+                overflow: hidden;
+                background-color: black;
+                color: black;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .ui-container {
+                width: 100%;
+                position: fixed;
+            }
+
+            #controls {
+                max-width: 790px;
+                height: auto;
+                margin: 0 auto;
+                padding: 10px;
+                padding-bottom: 50px;
+
+                overflow-y: scroll;
+                max-height: 80vh;
+
+                background: rgba(255,255,255, 0.9);
+                border-radius: 3px;
+                font-size: 120%;
+
+                transform: translateY(-100%);
+                transition: transform 500ms ease;
+            }
+
+            #controls.open {
+                transform: translateY(0);
+            }
+
+            .toggle {
+                background-color: transparent;
+                width: 50px;
+                height: 50px;
+                padding: 5px;
+                border: 0;
+                outline: 0;
+                display: block;
+                position: absolute;
+                bottom: -50px;
+                left:50%;
+                top: 0;
+                margin-left:-25px;
+                cursor: pointer;
+                transform: rotateX(0);
+                transition: transform 500ms ease;
+            }
+
+            #controls.open ~ .toggle {
+                top: auto;
+                transform: rotateX(180deg);
+            }
+
+            #enterVRButton {
+                position: absolute;
+                height: 60px;
+                width: 100px;
+                cursor: pointer;
+                background-image: url(./images/cardboard64.png);
+                background-size: cover;
+                background-repeat: no-repeat;
+                transition: transform 300ms ease;
+            }
+
+            #stylesContainer {
+                display: flex;
+                height: 30vh;
+            }
+
+            #stylesContainer > div {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                text-align: center;
+                cursor: pointer;
+            }
+            #stylesContainer > div > img {
+                height: 75%;
+                margin: 10px;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div class="ui-container">
+            <div id="enterVRButton"></div>
+            <div id="controls">
+
+                <div id="stylesContainer"></div>
+
+            </div>
+
+            <button class="toggle">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 129 129">
+                    <g>
+                    <path d="m121.3,34.6c-1.6-1.6-4.2-1.6-5.8,0l-51,51.1-51.1-51.1c-1.6-1.6-4.2-1.6-5.8,0-1.6,1.6-1.6,4.2 0,5.8l53.9,53.9c0.8,0.8 1.8,1.2 2.9,1.2 1,0 2.1-0.4 2.9-1.2l53.9-53.9c1.7-1.6 1.7-4.2 0.1-5.8z" fill="#FFFFFF"/>
+                    </g>
+                </svg>
+            </button>
+        </div>
+    </body>
+    <link rel="icon" href="./images/favicon.ico" type="image/x-icon">
+    <script>
+        if ("serviceworker" in navigator) {
+            navigator.serviceWorker.register("/sw.js")
+            .then(function(reg){reg.active&&console.log("SW active")})
+            .catch(function(e){console.log("SW Error:",e)})
+        }
+    </script>
+</html>
