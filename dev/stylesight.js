@@ -122,6 +122,8 @@ window.addEventListener("load", async () => {
     Net.activeStyle = styles[0]
 
     styles.forEach(style => {
+
+        let img
         const {id, name} = style
         const styleDiv = document.createElement("div")
         styleDiv.className = "style"
@@ -129,12 +131,25 @@ window.addEventListener("load", async () => {
         const label = document.createElement("span")
         label.innerHTML = name
 
+        const loadingContainer = document.createElement("div")
+        loadingContainer.className = "loadingContainer"
+        const spinner = document.createElement("div")
+        spinner.className = "spinner"
+        const loadingNote = document.createElement("span")
+        loadingNote.className = "loadingNote"
+        loadingNote.innerHTML = "Loading..."
+
         if (id == "none") {
             label.style.width = "150px"
         } else {
-            const img = document.createElement("img")
+            img = document.createElement("img")
+            img.onload = () => loadingContainer.style.width = img.width + 20 + "px"
             img.src = `./images/${id}.jpg`
             styleDiv.appendChild(img)
+
+            loadingContainer.appendChild(spinner)
+            styleDiv.appendChild(loadingContainer)
+            styleDiv.appendChild(loadingNote)
         }
 
         styleDiv.appendChild(label)
@@ -157,12 +172,25 @@ window.addEventListener("load", async () => {
 
             if (id=="none") {
                 makeBoxObject()
-                // styleBox.visible = false
-                // styleTexture.needsUpdate = true
             } else {
-                // styleBox.visible = true
                 makeBoxObject(100)
-                style.model = style.model || await Net.loadStyle(id)
+
+                if (!style.model) {
+                    loadingNote.style.display = "block"
+                    spinner.style.display = "block"
+                    img.style.opacity = 0.5
+                    const model = await Net.loadStyle(id, (done, total) => loadingNote.innerHTML = `Loading... ${done}/${total}`)
+
+                    spinner.remove()
+                    loadingNote.remove()
+                    img.style.opacity = 1
+
+                    // Wait a frame to allow UI to update
+                    requestAnimationFrame(() => {
+                        style.model = model
+                    })
+
+                }
             }
 
             console.log("activeStyle", activeStyle)

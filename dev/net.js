@@ -4,7 +4,7 @@ const ckptsDir = document.URL.substr(0,document.URL.lastIndexOf("/")) + "/ckpts/
 
 class Net {
 
-    static loadStyle (id) {
+    static loadStyle (id, callback) {
 
         let checkpointManifest
         let vs = {}
@@ -25,6 +25,12 @@ class Net {
                 const variableNames = Object.keys(checkpointManifest)
 
                 const variablePromises = variableNames.map(getVariable)
+
+                if (callback) {
+                    let donePromises = 0
+                    variablePromises.forEach(p => p.then(() => callback(++donePromises, variablePromises.length)))
+                }
+
                 Promise.all(variablePromises).then(variables => {
                     variables.forEach((val, vi) => {
                         vs[variableNames[vi]] = val
