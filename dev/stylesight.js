@@ -179,7 +179,7 @@ window.addEventListener("load", async () => {
                     loadingNote.style.display = "block"
                     spinner.style.display = "block"
                     img.style.opacity = 0.5
-                    const model = await Net.loadStyle(id, (done, total) => loadingNote.innerHTML = `Loading... ${done}/${total}`)
+                    const model = await Net.loadStyle(id, (done, total) => loadingNote.innerHTML = `Loading... ${parseInt(done/total*100)}%`)
 
                     spinner.remove()
                     loadingNote.remove()
