@@ -132,7 +132,7 @@ class Net {
             uniform float width;
             uniform float height;
             uniform float radius;
-            uniform float intensity;
+            uniform float opacity;
             uniform vec2 resolution;
             varying vec2 vUv;
 
@@ -148,11 +148,7 @@ class Net {
                 vec4 pixel = texture2D(texture, vUv);
 
                 if (sqrt( (0.5 - vUv[0])*(0.5 - vUv[0]) + (0.5 - vUv[1])*(0.5 - vUv[1]) ) < radius) {
-
-                    gl_FragColor = pixel;
-
-                    // gl_FragColor = newColour*(1.0-intensity) + pixel*intensity;
-
+                    gl_FragColor = pixel * opacity;
                 } else {
                     gl_FragColor.a = 0.0;
                 }

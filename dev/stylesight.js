@@ -369,7 +369,7 @@ window.addEventListener("load", async () => {
                                 type: "f",
                                 value: 0.4
                             },
-                            intensity: {
+                            opacity: {
                                 type: "f",
                                 value: 1.0
                             }
@@ -436,10 +436,16 @@ window.addEventListener("load", async () => {
     // UI
     const updateRadius = () => {
         styleMaterial && (styleMaterial.uniforms.radius.value = parseFloat(radiusSlider.value))
-        console.log("set radius to", parseFloat(radiusSlider.value))
     }
 
     radiusSlider.addEventListener("change", updateRadius)
     radiusSlider.addEventListener("mousemove", updateRadius)
+
+    const updateOpacity = () => {
+        styleMaterial && (styleMaterial.uniforms.opacity.value = parseFloat(opacitySlider.value))
+    }
+
+    opacitySlider.addEventListener("change", updateOpacity)
+    opacitySlider.addEventListener("mousemove", updateOpacity)
 
 })
