@@ -4,6 +4,11 @@ StyleSight
 *Browser based 'real-time' AR 'fast' neural style transfer using tensorflowjs*
 
 ---
+## Live demo:
+
+https://ai.danruta.co.uk/stylesight/
+
+---
 
 With this, you can see the world around you as imagined in famous paintings.
 
