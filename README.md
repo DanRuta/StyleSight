@@ -24,3 +24,7 @@ Original AR/VR code: https://github.com/DanRuta/WebSight
 Original deeplearnjs style transfer demo and models: https://github.com/reiinakano/fast-style-transfer-deeplearnjs
 
 Original research paper: https://arxiv.org/abs/1603.08155
+
+### Development
+
+`npm install` the dependencies and run `grunt` to run concatenation and minification. Use `node server` to serve this to `localhost:1337`
